@@ -1,0 +1,61 @@
+{% for item in items %}
+    {% if item.printMonth %}
+        {% if not loop.first %}
+            </div>
+        {% endif %}
+        <a href="#" class="collapse-expand">
+            <span class="caps">{{ item.month }} {{ item.year }} <i class="far fa-minus-square fa-lg"></i></span>
+        </a>
+        <div class="item-list-wrapper">
+    {% endif %}
+    <a href="{{ path('item_show', {'id': item.id, 'direction': direction, 'shared': shared, 'all': all}) }}">
+        <div class="item-wrapper">
+            {% set addClass = '' %}
+            {% if item.category.luxury %}
+                {% set addClass = 'luxury' %}
+            {% endif %}
+
+            {% if not item.shared %}
+                <span class="fa-stack {{ direction == 'income' ? 'income' : 'outgo' }} {{ addClass }}">
+                    <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                    <i class="{{ item.category.icon }} fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+                </span>
+            {% else %}
+                <img src="{{ asset('assets/img/' ~ item.user.name|lower ~ '.png') }}"
+                     alt="user"
+                     class="item-user-image">
+            {% endif %}
+            <div class="item-title">
+                <span style="display: block;">{{ item.title }}</span>
+                <span class="item-date">{{ item.dateAt ? item.dateAt|date('d.m.Y') : '' }}</span>
+            </div>
+            <div class="item-price">
+                <span>{{ item.amount|number_format(2, ',', '.')}} €</span>
+            </div>
+        </div>
+    </a>
+    {% if loop.last %}
+        </div>
+    {% endif %}
+{% endfor %}
+
+<script>
+    $('.collapse-expand').click(function(e) {
+        e.preventDefault();
+        $wrapper = $(this).next();
+
+        if($wrapper.css('display') == 'block') {
+            $wrapper.css('display', 'none');
+            $(this)
+                .find('i')
+                .removeClass('fa-minus-square')
+                .addClass('fa-plus-square');
+        } else {
+            $wrapper.css('display', 'block');
+            $(this)
+                .find('i')
+                .removeClass('fa-plus-square')
+                .addClass('fa-minus-square');
+        }
+    });
+</script>

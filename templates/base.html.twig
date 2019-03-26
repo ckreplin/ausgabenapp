@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#0077e3">
+    <meta name="msapplication-TileColor" content="#0077e3">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/material-checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    <script src="{{ asset('assets/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+{% if appMainMenu is not defined %}    {% set appMainMenu = true %}     {% endif %}
+{% if editMenu is not defined %}       {% set editMenu  = false %}      {% endif %}
+{% if closeSheet is not defined %}     {% set closeSheet = false %}     {% endif %}
+{% if smallTitle is not defined %}     {% set smallTitle = false %}     {% endif %}
+{% if suppressButton is not defined %} {% set suppressButton = false %} {% endif %}
+
+{% if appMainMenu %}
+    {% set editMode = editLink is defined or deleteLink is defined %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% if not suppressButton %}
+                        {% if closeSheet %}
+                            <a class="close-sheet" href="{{ closeLink }}">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        {% else %}
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        {% endif %}
+                        <span class="navbar-brand">{% if title is defined %}{{ title }}{% else %}&nbsp;{% endif %}</span>
+                    {% else %}
+                        {% set addClass = '' %}
+                        {% if smallTitle == true %}
+                            {% set addClass = 'header-title' %}
+                        {% endif %}
+                        <span class="navbar-brand {{ addClass }}">{% if title is defined %}{{ title }}{% else %}&nbsp;{% endif %}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="nav-icons-right" {% if editMode %}style="display: inline;"{% endif %}>
+                {% if editMode %}
+                    <ul>
+                        {% if editLink is defined %}
+                            <li>
+                                <a class="link-gray" href="{{ editLink }}">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if deleteLink is defined %}
+                            <li>
+                                {% block deleteLink %}{% endblock %}
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% elseif app.user %}
+                    <ul>
+                        {#<li class="nav-item">#}
+                            {#<a class="nav-link" href="{{ path('item_index') }}"><i class="fas fa-euro-sign"></i></a>#}
+                        {#</li>#}
+                        {#<li class="nav-item">#}
+                            {#<a class="nav-link" href="{{ path('item_index') }}"><i class="fas fa-fw fa-chart-bar"></i></a>#}
+                        {#</li>#}
+                        {#<li class="nav-item">#}
+                            {#<a class="nav-link" href="{{ path('category_index') }}"><i class="fas fa-fw fa-tags"></i></a>#}
+                        {#</li>#}
+                        {#<li class="nav-item">#}
+                            {#<a class="nav-link" href="{{ path('logout') }}"><i class="fas fa-fw fa-sign-out-alt"></i></a>#}
+                        {#</li>#}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+{% endif %}
+
+<div class="container">
+    {% if app.session.flashbag.all %}
+        <div class="row">
+            <div class="col-12 main-wrapper">
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-{{ label }}">{{ flash|raw }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-12" style="padding-bottom: 80px;">
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.navbar-toggler').click(function(e) {
+        e.stopPropagation();
+        var $navIcons = $('.nav-icons-right');
+        if ($navIcons.css('display') === 'none') {
+            $navIcons.css('display', 'inline');
+        } else {
+            $navIcons.hide();
+        }
+    });
+</script>
+
+</body>
+</html>

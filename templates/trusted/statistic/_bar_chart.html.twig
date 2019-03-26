@@ -1,0 +1,26 @@
+<div class="bar-chart-wrapper">
+    {% for item in items %}
+        <div class="bar-wrapper">
+            <div class="bar-title-wrapper">
+                <span class="bar-title">{{ item.title }}</span>
+            </div>
+            <span class="vertical-line"></span>
+            <div class="bar-margin">
+                {% if item.link is defined %}
+                    <a href="{{ item.link }}">
+                {% endif %}
+                <div class="bar {{ item.barcolor }}" style="width: {{ item.percent }}%;">
+                    {% if item.percent < 18 %}
+                        <span class="bar-value">&nbsp;</span>
+                        <span class="bar-value-after c_{{ item.barcolor }}">{{ item.amount|number_format(2, ',', '.') }} €</span>
+                    {% else %}
+                        <span class="bar-value">{{ item.amount|number_format(2, ',', '.') }} €</span>
+                    {% endif %}
+                </div>
+                {% if item.link is defined %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

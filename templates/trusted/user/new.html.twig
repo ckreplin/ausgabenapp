@@ -1,0 +1,12 @@
+{% set appMainMenu = true %}
+{% set title = 'Neuen Anwender erstellen' %}
+{% set smallTitle = true %}
+{% set suppressButton = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Neuer Anwender{% endblock %}
+
+{% block body %}
+    {% include 'trusted/user/_form.html.twig' %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% set incomePrinted = false %}
+{% set sharedOutgoPrinted = false %}
+{% set sharedIncomePrinted = false %}
+{% set direction = 'outgo' %}
+{% for category in categories %}
+    {% if loop.first and not category.shared %}
+        <span class="caps">Ausgaben</span>
+    {% elseif category.income and not category.shared and not incomePrinted %}
+        <span class="caps">Einnahmen</span>
+        {% set incomePrinted = true %}
+        {% set direction = 'income' %}
+    {% elseif category.shared and not category.income and not sharedOutgoPrinted %}
+        <span class="caps">Haushaltskasse Ausgaben</span>
+        {% set sharedOutgoPrinted = true %}
+        {% set direction = 'shared' %}
+    {% elseif category.shared and category.income and not sharedIncomePrinted %}
+        <span class="caps">Haushaltskasse Einnahmen</span>
+        {% set sharedIncomePrinted = true %}
+        {% set direction = 'shared' %}
+    {% endif %}
+
+    <a href="{{ path('category_show', {'id': category.id}) }}">
+        <div class="item-wrapper">
+            {% set addClass = '' %}
+            {% if category.luxury %}
+                {% set addClass = 'luxury' %}
+            {% endif %}
+
+            <span class="fa-stack {{ direction }} {{ addClass }}">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="{{ category.icon }} fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+            </span>
+            <div class="item-title">
+                <span>{{ category.title }}</span>
+            </div>
+        </div>
+    </a>
+{% endfor %}

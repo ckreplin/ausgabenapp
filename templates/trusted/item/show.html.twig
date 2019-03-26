@@ -1,0 +1,95 @@
+{% set term = direction == 'income' ? 'Einnahme'  : 'Ausgabe' %}
+
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path(all ? 'item_index_all' : 'item_index', {'direction': direction, 'shared': shared}) %}
+{#{% set deleteLink = path('item_delete', {id: item.id, 'direction': direction}) %}#}
+{% set deleteLink = true %}
+{% set editLink = path('item_edit', {'id': item.id, 'direction': direction, 'shared': shared, 'all': all}) %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ term }}{% endblock %}
+
+{% block deleteLink %}
+    <form class="delete-form" method="post" action="{{ path('item_delete', {'id': item.id, 'direction': direction, 'all': all}) }}" onsubmit="return confirm('Diese {{ term }} löschen?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+        <button class="btn p-0 text-danger"><i class="far fa-trash-alt"></i></button>
+    </form>
+{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                {% set addClass = '' %}
+                {% if item.category.luxury %}
+                    {% set addClass = 'luxury' %}
+                {% endif %}
+
+                {% set directionClass = direction == 'income' ? 'income' : 'outgo' %}
+
+                {% if item.shared %}
+                    <img src="{{ asset('assets/img/' ~ item.user.name|lower ~ '.png') }}"
+                         alt="user"
+                         class="item-user-image big mb-2 mt-4">
+                {% else %}
+                    <span class="fa-stack fa-2x {{ directionClass }} {{ addClass }} mb-2 mt-4">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="{{ item.category.icon }} fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+                    </span>
+                {% endif %}
+
+                <p class="detail-item-title main">{{ item.title }}</p>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="detail-item-title">Details</p>
+            </div>
+        </div>
+        <div class="detail-info">
+            <div class="row mb-2">
+                <div class="col-3 text-center">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+                <div class="col-9">
+                    <span>{{ item.amount|number_format(2, ',', '.') }} €</span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-3 text-center">
+                    <i class="far fa-calendar-alt"></i>
+                </div>
+                <div class="col-9">
+                    <span>{{ item.dateAt ? item.dateAt|date('d.m.Y') : '' }}</span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-3 text-center">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="col-9">
+                    <span>{{ item.category.title }}</span>
+                </div>
+            </div>
+            {% if item.description %}
+                <div class="row mb-2">
+                    <div class="col-3 text-center">
+                        <i class="far fa-sticky-note"></i>
+                    </div>
+                    <div class="col-9">
+                        <span>{{ item.description }}</span>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-12">
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<div class="edit-details mt-4">
+    {{ form_start(form) }}
+        <div class="row mt-2">
+                <div class="col-3 text-center">
+
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.title) }}
+                        {{ form_widget(form.title) }}
+                </div>
+        </div>
+        <div class="row mt-2">
+                <div class="col-3 text-center">
+                        <i class="fas fa-euro-sign"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.amount) }}
+                        {{ form_widget(form.amount) }}
+                </div>
+        </div>
+        <div class="row" >
+                <div class="col-3 text-center">
+                        <i class="far fa-calendar-alt"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.dateAt) }}
+                        {{ form_widget(form.dateAt) }}
+                </div>
+        </div>
+        <div class="row mt-2">
+                <div class="col-3 text-center">
+                        <i class="fas fa-tags"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.category) }}
+                        {{ form_widget(form.category) }}
+                </div>
+        </div>
+        <div class="row mt-2">
+                <div class="col-3 text-center">
+                        <i class="far fa-sticky-note"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                </div>
+        </div>
+        {{ form_widget(form) }}
+
+        <div class="footer text-right">
+                {% if edit %}
+                        {% set cancelLink = path('item_show', {'id': item.id, 'direction': direction, 'all': all}) %}
+                {% else %}
+                        {% set cancelLink = path(all ? 'item_index_all' : 'item_index', {'direction': direction}) %}
+                {% endif %}
+
+                <a href="{{ cancelLink }}">Abbrechen</a>
+                <button class="btn">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,23 @@
+{% set term = direction == 'income' ? 'Einnahmen'  : 'Ausgaben' %}
+
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path('trusted_index_action') %}
+{% set title = term %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ term }}{% endblock %}
+
+{% block body %}
+    <div class="mt-5" style="float: left; width: 100%;">
+        {{ include('trusted/item/_list.html.twig', {'items': items, 'all': all}) }}
+
+        <a class="new-image" href="{{ path('item_new', {'direction': direction, 'shared': shared, 'all': all}) }}">
+            <span class="fa-stack {{ direction == 'income' ? 'income' : 'outgo' }} fa-lg">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fas fa-plus fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+            </span>
+        </a>
+    </div>
+{% endblock %}

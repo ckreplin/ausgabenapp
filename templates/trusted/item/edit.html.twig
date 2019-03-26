@@ -1,0 +1,14 @@
+{% set term = direction == 'income' ? 'Einnahme'  : 'Ausgabe' %}
+
+{% set appMainMenu = true %}
+{% set title = term ~ ' bearbeiten' %}
+{% set smallTitle = true %}
+{% set suppressButton = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ term }} bearbeiten{% endblock %}
+
+{% block body %}
+    {% include 'trusted/item/_form.html.twig' with {'edit': true, 'id': item.id, 'all': all} %}
+{% endblock %}

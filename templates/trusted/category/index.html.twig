@@ -1,0 +1,21 @@
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path('trusted_index_action') %}
+{% set title = 'Kategorien' %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ausgaben{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {{ include('trusted/category/_list.html.twig', {'categories': categories}) }}
+
+        <a class="new-image outgo" href="{{ path('category_new') }}">
+            <span class="fa-stack outgo fa-lg">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fas fa-plus fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+            </span>
+        </a>
+    </div>
+{% endblock %}

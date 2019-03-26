@@ -1,0 +1,17 @@
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path('trusted_index_action') %}
+{% set title = 'Bilanz Haushaltskasse' %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {% for item in items %}
+            <span class="caps {% if not loop.first %}mt-4 {% endif %}">{{ item.title }}</span>
+            {% include 'trusted/statistic/_bar_chart.html.twig' with {'items': item.items} %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% set term = direction == 'income' ? 'Einnahme'  : 'Ausgabe' %}
+
+{% set appMainMenu = true %}
+{% set title = 'Neue ' ~ term ~ ' erstellen' %}
+{% set smallTitle = true %}
+{% set suppressButton = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Neue {{ term }}{% endblock %}
+
+{% block body %}
+    {% include 'trusted/item/_form.html.twig' with {'edit': false, 'direction': direction, 'all': all} %}
+{% endblock %}

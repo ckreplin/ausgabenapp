@@ -1,0 +1,67 @@
+<div class="edit-details mt-4">
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <div class="col-3 text-center">
+
+        </div>
+        <div class="col-9">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title) }}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-3 text-center">
+            <i class="fas fa-camera"></i>
+        </div>
+        <div class="col-9">
+            {{ form_label(form.icon) }}
+            {{ form_widget(form.icon) }}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-3 text-center">
+            <i class="far fa-gem"></i>
+        </div>
+        <div class="col-9">
+            <div class="md-checkbox mb-0">
+                {{ form_widget(form.luxury) }}
+                {{ form_label(form.luxury) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 text-center">
+            <i class="fas fa-wallet"></i>
+        </div>
+        <div class="col-9">
+            <div class="md-checkbox mb-0">
+                {{ form_widget(form.income) }}
+                {{ form_label(form.income) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 text-center">
+            <i class="fas fa-piggy-bank"></i>
+        </div>
+        <div class="col-9">
+            <div class="md-checkbox">
+                {{ form_widget(form.shared) }}
+                {{ form_label(form.shared) }}
+            </div>
+        </div>
+    </div>
+    {{ form_widget(form) }}
+
+    <div class="footer text-right">
+        {% if edit %}
+            {% set cancelLink = path('category_show', {'id': category.id}) %}
+        {% else %}
+            {% set cancelLink = path('category_index') %}
+        {% endif %}
+
+        <a href="{{ cancelLink }}">Abbrechen</a>
+        <button class="btn">Speichern</button>
+    </div>
+    {{ form_end(form) }}
+</div>

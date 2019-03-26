@@ -1,0 +1,38 @@
+<div class="edit-details mt-4">
+    {{ form_start(form) }}
+        <div class="row mt-2">
+                <div class="col-3 text-center">
+                        <i class="fas fa-user"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                </div>
+        </div>
+        <div class="row mt-2">
+                <div class="col-3 text-center">
+                        <i class="far fa-envelope"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                </div>
+        </div>
+        <div class="row" >
+                <div class="col-3 text-center">
+                        <i class="fas fa-key"></i>
+                </div>
+                <div class="col-9">
+                        {{ form_label(form.password) }}
+                        {{ form_widget(form.password) }}
+                </div>
+        </div>
+        {{ form_widget(form) }}
+
+        <div class="footer text-right">
+                {% set cancelLink = path('trusted_index_action') %}
+                <a href="{{ cancelLink }}">Abbrechen</a>
+                <button class="btn">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+</div>

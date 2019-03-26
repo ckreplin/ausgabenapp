@@ -1,0 +1,41 @@
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path('trusted_index_action') %}
+{% set title = 'Auswertungen' %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Auswertungen{% endblock %}
+
+{% block body %}
+    <div class="mt-5" style="float: left;">
+        <span class="caps">Umsätze je Monat/Jahr</span>
+        {% for item in items %}
+            <a href="{{ path('statistic_show', {'year': item.year, 'month': item.month}) }}">
+                <div class="item-wrapper statistics">
+                    <span class="fa-stack outgo">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="fas fa-chart-line fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+                    </span>
+                    <div class="item-title">
+                        <span style="display: block;">{{ item.display }}</span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        <span class="caps">Kategorien je Jahr</span>
+        {% for year in years %}
+            <a href="{{ path('statistic_show_category', {'year': year}) }}">
+                <div class="item-wrapper statistics">
+                    <span class="fa-stack income">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="fas fa-tags fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+                    </span>
+                    <div class="item-title">
+                        <span style="display: block;">{{ year }}</span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

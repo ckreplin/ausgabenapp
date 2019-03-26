@@ -1,0 +1,12 @@
+{% set appMainMenu = true %}
+{% set title = 'Kategorie bearbeiten' %}
+{% set smallTitle = true %}
+{% set suppressButton = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Kategorie bearbeiten{% endblock %}
+
+{% block body %}
+    {% include 'trusted/category/_form.html.twig' with {'edit': true, 'id': category.id} %}
+{% endblock %}

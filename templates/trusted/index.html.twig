@@ -1,0 +1,213 @@
+{% set title = 'Ausgabenapp' %}
+{% set suppressButton = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Moin {{ app.user.name }}{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img class="profile-img" src="{{ asset('assets/img/' ~ app.user.name|lower ~ '.png') }}" alt="img">
+                <h1>Moin {{ app.user.name }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {% set saldoColor = saldo >= 0 ? '#65B047' : '#007bff' %}
+                <span class="caps mt-3">
+                    Eigene Finanzen
+                    <span style="color: {{ saldoColor }};"
+                          class="show-saldo">
+                        {{ saldo|number_format(2, ',', '.') }} €
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                <div class="box-rounded">
+                    <div class="content">
+                        <p class="title">Ausgaben</p>
+                        <p class="description">
+                            Hier geht es zur Übersicht der Ausgaben. Die roten Ausgaben sind Luxusausgaben.
+                        </p>
+                    </div>
+                    <img class="img-fluid" src="{{ asset('assets/svg/outgo.svg') }}" alt="Ausgaben">
+                </div>
+                <div class="call-to-action">
+                    <a href="{{ path('item_index', {'direction': 'outgo'}) }}">Aktuelle Ausgaben</a>
+                    <a href="{{ path('item_index_all', {'direction': 'outgo'}) }}">Alle Ausgaben</a>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                <div class="box-rounded">
+                    <div class="content">
+                        <p class="title">Einnahmen</p>
+                        <p class="description">
+                            Hier geht es zur Übersicht der Einnahmen. <br><br>
+                        </p>
+                    </div>
+                    <img class="img-fluid" src="{{ asset('assets/svg/income.svg') }}" alt="Einnahmen">
+                </div>
+                <div class="call-to-action">
+                    <a href="{{ path('item_index', {'direction': 'income'}) }}">Aktuelle Einnahmen</a>
+                    <a href="{{ path('item_index_all', {'direction': 'income'}) }}">Alle Einnahmen</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Auswertungen</p>
+                            <p class="description">
+                                Auf zur grafischen Überprüfung für Ausgaben und Einnahmen je Kategorie und Monat.
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/chart.svg') }}" alt="Auswertungen">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('statistic_index') }}">Auswertungen betrachten</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {% set saldoColor = saldoShared >= 0 ? '#65B047' : '#007bff' %}
+                <span class="caps mt-3">
+                    Haushaltsbuch
+                    <span style="color: {{ saldoColor }};"
+                          class="show-saldo">
+                        {{ saldoShared|number_format(2, ',', '.') }} €
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Ausgaben</p>
+                            <p class="description">
+                                Hier geht es zur Übersicht der Ausgaben für das Haushaltsbuch.
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/shared_outgo.svg') }}" alt="Ausgaben">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('item_index', {'direction': 'outgo', 'shared': true}) }}">Aktuelle Ausgaben</a>
+                        <a href="{{ path('item_index_all', {'direction': 'outgo', 'shared': true}) }}">Alle Ausgaben</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Einnahmen</p>
+                            <p class="description">
+                                Hier geht es zur Übersicht der Einnahmen für das Haushaltsbuch.
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/shared_income.svg') }}" alt="Einnahmen">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('item_index', {'direction': 'income', 'shared': true}) }}">Aktuelle Einnahmen</a>
+                        <a href="{{ path('item_index_all', {'direction': 'income', 'shared': true}) }}">Alle Einnahmen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Bilanz</p>
+                            <p class="description">
+                                Auf zur grafischen Überprüfung der Bilanz für das Haushaltsbuch.
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/balance.svg') }}" alt="Bilanz">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('statistic_show_shared') }}">Bilanz betrachten</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span class="caps mt-3">Weiteres</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Kategorien</p>
+                            <p class="description">
+                                Die Kategorien für Einnahmen und Ausgaben können hier verwaltet werden.
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/category.svg') }}" alt="Kategorien">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('category_index') }}">Kategorien verwalten</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Anwenderverwaltung</p>
+                            <p class="description">
+                                Hier kannst du das Anlegen von Anwendern ein- oder ausschalten. Schalte es ab, wenn du es nicht mehr benötigst (Sicherheit)
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/user_add.svg') }}" alt="Anwenderverwaltung">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('trusted_user_creation_switch') }}" class="danger">
+                            {{ isUserCreationAllowed ? 'Anlegen deaktivieren' : 'Anlegen aktivieren' }}
+                        </a>
+                        {% if isUserCreationAllowed %}
+                            <a href="{{ path('default_user_new') }}">
+                                Neuen Anwender anlegen
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="box-rounded-holder">
+                    <div class="box-rounded">
+                        <div class="content">
+                            <p class="title">Ausloggen</p>
+                            <p class="description">
+                                Du willst schon gehen? Schade, es geht hier lang.
+                            </p>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('assets/svg/logout.svg') }}" alt="Ausloggen">
+                    </div>
+                    <div class="call-to-action">
+                        <a href="{{ path('logout') }}">{{ app.user.name }} jetzt ausloggen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

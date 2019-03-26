@@ -1,0 +1,33 @@
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path('category_index') %}
+{% set deleteLink = true %}
+{% set editLink = path('category_edit', {'id': category.id}) %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Kategorie{% endblock %}
+
+{% block deleteLink %}
+    <form class="delete-form" method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('Diese Kategorie löschen?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+        <button class="btn p-0 text-danger"><i class="far fa-trash-alt"></i></button>
+    </form>
+{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                {% set directionClasses = category.income == 1 ? 'income' : category.luxury == 1 ? 'outgo luxury' : 'outgo' %}
+                <span class="fa-stack fa-2x outgo mb-2 {{ directionClasses }} {% if category.shared %} shared{% endif %}">
+                    <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                    <i class="{{ category.icon }} fa-stack-1x" style="color: rgba(255,255,255, .90);"></i>
+                </span>
+                <p class="detail-item-title main">{{ category.title }}</p>
+                <hr>
+            </div>
+        </div>
+    </div>
+{% endblock %}

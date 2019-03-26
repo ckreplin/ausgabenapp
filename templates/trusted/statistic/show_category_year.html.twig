@@ -1,0 +1,15 @@
+{% set appMainMenu = true %}
+{% set closeSheet = true %}
+{% set closeLink = path('statistic_show_category', {'year': year}) %}
+{% set title = 'Kategorie ' ~ year %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        <span class="caps">{{ categoryName }}</span>
+        {% include 'trusted/statistic/_bar_chart.html.twig' with {'items': items} %}
+    </div>
+{% endblock %}
